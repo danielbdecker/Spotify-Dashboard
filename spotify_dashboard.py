@@ -285,7 +285,7 @@ fig_weekly_listening = px.line(
     weekly_listening,
     x='week_start',
     y='hrs',
-    labels={'hrs': 'Total Listening Time (hours)', 'week_start': 'Week Starting'},
+    labels={'hrs': 'Total Listening Time (hours)', 'week_start': 'Week'},
     markers=True
 )
 
