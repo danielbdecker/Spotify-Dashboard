@@ -261,6 +261,41 @@ fig_monthly_listening.update_layout(
     yaxis=dict(range=[0, monthly_listening['hrs'].max() * 1.1])  # Setting the minimum value to 0 and max slightly above the max value
 )
 
+
+
+############################
+## WEEKLY LISTENING TIME ##
+############################
+
+# Group by week and sum listening times
+weekly_listening = df_filtered.groupby(pd.Grouper(key='endTime', freq='W')).agg({'msPlayed': 'sum'}).reset_index()
+
+# Convert the week to a more readable format (start date of the week)
+weekly_listening['week_start'] = weekly_listening['endTime'].dt.to_period('W').astype(str)
+
+# Calculate total listening time in hours
+weekly_listening['hrs'] = weekly_listening['msPlayed'].apply(convert_ms_to_hrs_num)
+
+# Print the weekly listening time DataFrame for debugging
+# print(f"WEEKLY LISTENING TIME\n{weekly_listening}\n")
+
+# Create a line chart for weekly listening time
+fig_weekly_listening = px.line(
+    weekly_listening,
+    x='week_start',
+    y='hrs',
+    labels={'hrs': 'Total Listening Time (hours)', 'week_start': 'Week Starting'},
+    markers=True
+)
+
+# Update layout to set the y-axis range starting at 0
+fig_weekly_listening.update_layout(
+    yaxis=dict(range=[0, weekly_listening['hrs'].max() * 1.1]),  # Setting the minimum value to 0 and max slightly above the max value
+    title='Weekly Listening Time'
+)
+
+
+
 ##########################
 ## DAILY LISTENING TIME ##
 ##########################
@@ -338,6 +373,10 @@ with col4:
 # Monthly Listening Time
 st.subheader('Monthly Listening Time')
 st.plotly_chart(fig_monthly_listening)
+
+# Weekly Listening Time
+st.subheader('Weekly Listening Time')
+st.plotly_chart(fig_weekly_listening)
 
 # Daily Listening Time
 st.subheader('Daily Listening Time')
