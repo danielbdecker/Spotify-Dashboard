@@ -301,13 +301,18 @@ import streamlit as st
 # Set up the Streamlit app
 st.title('Spotify Dashboard')
 
-# Top artists
-st.subheader('Top Artists Sept 2023 - Sept 2024')
-st.plotly_chart(fig_top_artists)
+col1, col2 = st.columns(2)
 
-# Top songs
-st.subheader('Top Songs Sept 2023 - Sept 2024')
-st.plotly_chart(fig_top_songs)
+# Display the top artists chart in the first column
+with col1:
+    st.subheader('Top Artists Sept 2023 - Sept 2024')
+    st.plotly_chart(fig_top_artists, use_container_width=True)
+
+# Display the top songs chart in the second column
+with col2:
+    st.subheader('Top Songs Sept 2023 - Sept 2024')
+    st.plotly_chart(fig_top_songs, use_container_width=True)
+
 
 # Top Songs Per Month
 st.subheader('Top Songs Per Month')
