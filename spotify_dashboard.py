@@ -352,6 +352,8 @@ st.set_page_config(layout="wide")
 # Set up the Streamlit app
 st.title('Spotify Dashboard')
 
+st.caption('This data was exported from Spotify from September 2023 through September 2024. Using pandas, plotly, and streamlit, I was able to organize the data and create this dashboard.')
+
 col1, col2 = st.columns(2)
 
 # Display the top artists chart in the first column
