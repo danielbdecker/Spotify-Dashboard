@@ -272,7 +272,7 @@ weekly_listening = df_filtered.groupby(pd.Grouper(key='endTime', freq='W')).agg(
 
 # Convert the week to a more readable format (start date of the week)
 weekly_listening['week_start'] = weekly_listening['endTime'].dt.to_period('W').astype(str)
-weekly_listening['week_start'] = weekly_listening['week_start'][:][:10]
+weekly_listening['week_start'] = weekly_listening['week_start'].str.split('/').str[0]
 
 # Calculate total listening time in hours
 weekly_listening['hrs'] = weekly_listening['msPlayed'].apply(convert_ms_to_hrs_num)
