@@ -91,7 +91,7 @@ top_songs_per_month['mins'] = top_songs_per_month['msPlayed'].apply(convert_ms_t
 # print(f"\nTOP SONGS PER MONTH\n{top_songs_per_month}\n")
 
 # Bar chart for top songs per month
-fig_top_songs = px.bar(top_songs_per_month,
+fig_top_songs_month = px.bar(top_songs_per_month,
                        x='month_year',
                        y='mins',
                        color='trackName',
@@ -119,7 +119,7 @@ top_artists_per_month['mins'] = top_artists_per_month['msPlayed'].apply(convert_
 # print(f"TOP ARTISTS PER MONTH\n{top_artists_per_month}\n")
 
 # Bar chart for top artists per month
-fig_top_artists = px.bar(top_artists_per_month,
+fig_top_artists_month = px.bar(top_artists_per_month,
                           x='month_year',
                           y='mins',
                           color='artistName',
@@ -171,7 +171,6 @@ fig_top_artists = px.bar(
     x='hrs',
     y='artistName',
     orientation='h',
-    title='Top Artists in the Past Year',
     labels={'hrs': 'Total Listening Time (hrs)', 'artistName': 'Artist'},
     text='listening_time'
 )
@@ -186,7 +185,7 @@ fig_top_artists.update_traces(
 # Sort bars by listening time and adjust layout
 fig_top_artists.update_layout(
     yaxis={'categoryorder': 'total ascending'},
-    xaxis_title='Listening Time (ms)',
+    xaxis_title='Listening Time (hours)',
     yaxis_title='',
     margin=dict(l=0, r=0, t=40, b=40),
     height = 800
@@ -277,11 +276,11 @@ st.plotly_chart(fig_top_artists)
 
 # Top Songs Per Month
 st.subheader('Top Songs Per Month')
-st.plotly_chart(fig_top_songs)
+st.plotly_chart(fig_top_songs_month)
 
 # Top Artists Per Month
 st.subheader('Top Artists Per Month')
-st.plotly_chart(fig_top_artists)
+st.plotly_chart(fig_top_artists_month)
 
 # Monthly Listening Time
 st.subheader('Monthly Listening Time')
