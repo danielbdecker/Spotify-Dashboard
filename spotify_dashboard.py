@@ -8,6 +8,17 @@ import plotly.express as px
 ##  FUNCTIONS  ##
 #################
 
+#function to convert to numerical hours
+def convert_ms_to_hrs_num(ms):
+    minutes = ms // 60000
+    hours = round((minutes / 60), 2)
+    return hours
+
+#function to convert to numerical minutes
+def convert_ms_to_min_num(ms):
+    minutes = ms // 60000
+    return minutes
+
 #function to convert ms to a string with hours (optional), minutes, and seconds
 def convert_ms_to_hr_min_sec(ms):
     hours = 0
@@ -73,16 +84,19 @@ top_songs_per_month = monthly_songs.sort_values(['month_year', 'msPlayed'], asce
 #making listening time easier to understand by grouping into minutes, seconds
 top_songs_per_month['listening_time'] = top_songs_per_month['msPlayed'].apply(convert_ms_to_min_sec)
 
+#adding minutes listened to for better visability
+top_songs_per_month['mins'] = top_songs_per_month['msPlayed'].apply(convert_ms_to_min_num)
+
 #printing top songs per month results
 # print(f"\nTOP SONGS PER MONTH\n{top_songs_per_month}\n")
 
 # Bar chart for top songs per month
 fig_top_songs = px.bar(top_songs_per_month,
                        x='month_year',
-                       y='msPlayed',
+                       y='mins',
                        color='trackName',
                        title='Top Songs Per Month',
-                       labels={'msPlayed': 'Total Listening Time (ms)', 'month_year': 'Month'},
+                       labels={'mins': 'Total Listening Time (minutes)', 'month_year': 'Month'},
                        text='listening_time')
 
 
