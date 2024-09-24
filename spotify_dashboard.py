@@ -136,14 +136,42 @@ fig_top_artists_month = px.bar(top_artists_per_month,
 yearly_songs = df_filtered.groupby(['artistName', 'trackName'], as_index=False)['msPlayed'].sum()
 
 #create a df of top songs per month based on listening time
-top_songs = yearly_songs.sort_values(['msPlayed'], ascending=[False]).head(25)
+top_songs = yearly_songs.sort_values(['msPlayed'], ascending=[False]).head(15)
 
 #making listening time easier to understand by grouping into minutes, seconds
 top_songs['listening_time'] = top_songs['msPlayed'].apply(convert_ms_to_hr_min_sec)
 
+#adding minutes listened to for better visability
+top_songs['hrs'] = top_songs['msPlayed'].apply(convert_ms_to_hrs_num)
+
 #printing top songs per month results
 # print(f"TOP SONGS IN PAST YEAR\n{top_songs}\n")
 
+# Create a horizontal bar chart for top artists in the past year
+fig_top_songs = px.bar(
+    top_songs,
+    x='hrs',
+    y='trackName',
+    orientation='h',
+    labels={'hrs': 'Total Listening Time (hrs)', 'artistName': 'Artist'},
+    text='listening_time'
+)
+
+# Customize the layout and appearance
+fig_top_songs.update_traces(
+    textposition='inside',
+    insidetextanchor='start',
+    textfont=dict(color='white')
+)
+
+# Sort bars by listening time and adjust layout
+fig_top_songs.update_layout(
+    yaxis={'categoryorder': 'total ascending'},
+    xaxis_title='Listening Time (hours)',
+    yaxis_title='',
+    margin=dict(l=0, r=0, t=40, b=40),
+    height = 600
+)
 
 
 ##!!
@@ -155,7 +183,7 @@ top_songs['listening_time'] = top_songs['msPlayed'].apply(convert_ms_to_hr_min_s
 yearly_artists = df_filtered.groupby(['artistName'], as_index=False)['msPlayed'].sum()
 
 #create a df of top artists per month based on listening time
-top_artists = yearly_artists.sort_values(['msPlayed'], ascending=[False]).head(25)
+top_artists = yearly_artists.sort_values(['msPlayed'], ascending=[False]).head(15)
 
 #making listening time easier to understand by grouping into minutes, seconds
 top_artists['listening_time'] = top_artists['msPlayed'].apply(convert_ms_to_hr_min_sec)
@@ -188,7 +216,7 @@ fig_top_artists.update_layout(
     xaxis_title='Listening Time (hours)',
     yaxis_title='',
     margin=dict(l=0, r=0, t=40, b=40),
-    height = 800
+    height = 600
 )
 
 
@@ -270,9 +298,13 @@ import streamlit as st
 # Set up the Streamlit app
 st.title('Spotify Dashboard')
 
-# Display the figure in Streamlit
+# Top artists
 st.subheader('Top Artists Sept 2023 - Sept 2024')
 st.plotly_chart(fig_top_artists)
+
+# Top songs
+st.subheader('Top Songs Sept 2023 - Sept 2024')
+st.plotly_chart(fig_top_songs)
 
 # Top Songs Per Month
 st.subheader('Top Songs Per Month')
