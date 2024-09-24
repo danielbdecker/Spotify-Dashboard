@@ -186,6 +186,7 @@ fig_top_artists.update_layout(
     xaxis_title='Listening Time (ms)',
     yaxis_title='',
     margin=dict(l=0, r=0, t=40, b=40)
+    height = 800
 )
 
 
