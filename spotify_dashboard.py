@@ -336,7 +336,7 @@ fig_daily_listening = px.bar(daily_listening,
 
 fig_daily_listening.update_layout(
     margin=dict(l=0, r=0, t=40, b=40),
-    height = 600
+    height = 450
 )
 
 
