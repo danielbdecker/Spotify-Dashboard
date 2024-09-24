@@ -55,6 +55,9 @@ df['month_year'] = df['endTime'].dt.to_period('M').astype(str)
 #create column date as a day period
 df['date'] = pd.to_datetime(df['endTime']).dt.date
 
+#create column min_played for better visibility
+df['min_played'] = df['ms_played'] / 1000
+
 #remove the one song from March 2023 and the 3 Hour White Noise track
 df_filtered = df[~((df['month_year'].astype(str) == '2023-03') | (df['trackName'] == 'White Noise 3 Hour Long'))]
 
@@ -65,10 +68,10 @@ df_filtered = df[~((df['month_year'].astype(str) == '2023-03') | (df['trackName'
 #########################
 
 #sum each month's tracks' listening times together
-monthly_songs = df_filtered.groupby(['month_year', 'artistName', 'trackName'], as_index=False)['msPlayed'].sum()
+monthly_songs = df_filtered.groupby(['month_year', 'artistName', 'trackName'], as_index=False)['min_played'].sum()
 
 #create a df of top songs per month based on listening time
-top_songs_per_month = monthly_songs.sort_values(['month_year', 'msPlayed'], ascending=[True, False]).groupby('month_year').head(1)
+top_songs_per_month = monthly_songs.sort_values(['month_year', 'min_played'], ascending=[True, False]).groupby('month_year').head(1)
 
 #making listening time easier to understand by grouping into minutes, seconds
 top_songs_per_month['listening_time'] = top_songs_per_month['msPlayed'].apply(convert_ms_to_min_sec)
@@ -79,10 +82,10 @@ top_songs_per_month['listening_time'] = top_songs_per_month['msPlayed'].apply(co
 # Bar chart for top songs per month
 fig_top_songs = px.bar(top_songs_per_month,
                        x='month_year',
-                       y='msPlayed',
+                       y='min_played',
                        color='trackName',
                        title='Top Songs Per Month',
-                       labels={'msPlayed': 'Total Listening Time (ms)', 'month_year': 'Month'},
+                       labels={'min_played': 'Total Listening Time (min)', 'month_year': 'Month'},
                        text='listening_time')
 
 
