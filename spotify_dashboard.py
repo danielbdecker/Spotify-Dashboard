@@ -50,7 +50,7 @@ df = pd.read_json('StreamingHistory_music_0.json')
 df['endTime'] = pd.to_datetime(df['endTime'])
 
 #create column month_year as a month period
-df['month_year'] = df['endTime'].dt.to_period('M')
+df['month_year'] = df['endTime'].dt.to_period('M').astype(str)
 
 #create column date as a day period
 df['date'] = pd.to_datetime(df['endTime']).dt.date
