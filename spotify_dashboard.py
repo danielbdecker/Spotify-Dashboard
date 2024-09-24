@@ -323,16 +323,21 @@ daily_listening['msPlayed'] = daily_listening['msPlayed'].astype(int)
 daily_listening['listening_time'] = daily_listening['msPlayed'].apply(convert_ms_to_hr_min_sec)
 
 #adding minutes listened to for better visability
-daily_listening['mins'] = daily_listening['msPlayed'].apply(convert_ms_to_min_num)
+daily_listening['hrs'] = daily_listening['msPlayed'].apply(convert_ms_to_hrs_num)
 
 # print(f"DAILY LISTENING TIME\n{daily_listening}\n")
 
 # Bar chart for daily listening time
 fig_daily_listening = px.bar(daily_listening,
                               x='date',
-                              y='mins',
-                              labels={'mins': 'Total Listening Time (minutes)', 'date': 'Date'},
+                              y='hrs',
+                              labels={'hrs': 'Total Listening Time (hours)', 'date': 'Date'},
                               text='listening_time')
+
+fig_daily_listening.update_layout(
+    height = 350
+)
+
 
 
 #####################
