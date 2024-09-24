@@ -298,6 +298,8 @@ fig_daily_listening = px.bar(daily_listening,
 
 import streamlit as st
 
+st.set_page_config(layout="wide")
+
 # Set up the Streamlit app
 st.title('Spotify Dashboard')
 
