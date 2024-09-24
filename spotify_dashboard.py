@@ -185,7 +185,7 @@ fig_top_artists.update_layout(
     yaxis={'categoryorder': 'total ascending'},
     xaxis_title='Listening Time (ms)',
     yaxis_title='',
-    margin=dict(l=0, r=0, t=40, b=40)
+    margin=dict(l=0, r=0, t=40, b=40),
     height = 800
 )
 
