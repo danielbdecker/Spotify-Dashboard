@@ -160,17 +160,20 @@ top_artists = yearly_artists.sort_values(['msPlayed'], ascending=[False]).head(2
 #making listening time easier to understand by grouping into minutes, seconds
 top_artists['listening_time'] = top_artists['msPlayed'].apply(convert_ms_to_hr_min_sec)
 
+#adding minutes listened to for better visability
+top_artists['hrs'] = top_artists['msPlayed'].apply(convert_ms_to_hrs_num)
+
 # print(f"TOP ARTISTS IN PAST YEAR\n{top_artists}\n")
 
 # Create a horizontal bar chart for top artists in the past year
 fig_top_artists = px.bar(
     top_artists,
-    x='msPlayed',
+    x='hrs',
     y='artistName',
     orientation='h',
     title='Top Artists in the Past Year',
-    labels={'msPlayed': 'Total Listening Time (ms)', 'artistName': 'Artist'},
-    text='artistName'
+    labels={'hrs': 'Total Listening Time (hrs)', 'artistName': 'Artist'},
+    text='listening_time'
 )
 
 # Customize the layout and appearance
