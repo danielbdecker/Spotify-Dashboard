@@ -315,14 +315,17 @@ with col2:
     st.subheader('Top Songs Sept 2023 - Sept 2024')
     st.plotly_chart(fig_top_songs, use_container_width=True)
 
+col3, col4 = st.columns(2)
 
 # Top Songs Per Month
-st.subheader('Top Songs Per Month')
-st.plotly_chart(fig_top_songs_month)
+with col3:
+    st.subheader('Top Songs Per Month')
+    st.plotly_chart(fig_top_songs_month, use_container_width=True)
 
 # Top Artists Per Month
-st.subheader('Top Artists Per Month')
-st.plotly_chart(fig_top_artists_month)
+with col4:
+    st.subheader('Top Artists Per Month')
+    st.plotly_chart(fig_top_artists_month, use_container_width=True)
 
 # Monthly Listening Time
 st.subheader('Monthly Listening Time')
