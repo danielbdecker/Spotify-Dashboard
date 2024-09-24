@@ -162,6 +162,34 @@ top_artists['listening_time'] = top_artists['msPlayed'].apply(convert_ms_to_hr_m
 
 # print(f"TOP ARTISTS IN PAST YEAR\n{top_artists}\n")
 
+# Create a horizontal bar chart for top artists in the past year
+fig_top_artists = px.bar(
+    top_artists,
+    x='msPlayed',
+    y='artistName',
+    orientation='h',
+    title='Top Artists in the Past Year',
+    labels={'msPlayed': 'Total Listening Time (ms)', 'artistName': 'Artist'},
+    text='artistName'
+)
+
+# Customize the layout and appearance
+fig_top_artists.update_traces(
+    textposition='inside',
+    insidetextanchor='start',
+    textfont=dict(color='white')
+)
+
+# Sort bars by listening time and adjust layout
+fig_top_artists.update_layout(
+    yaxis={'categoryorder': 'total ascending'},
+    xaxis_title='Listening Time (ms)',
+    yaxis_title='',
+    margin=dict(l=0, r=0, t=40, b=40)
+)
+
+
+
 
 
 ############################
@@ -238,6 +266,10 @@ import streamlit as st
 
 # Set up the Streamlit app
 st.title('Spotify Dashboard')
+
+# Display the figure in Streamlit
+st.subheader('Top Artists Sept 2023 - Sept 2024')
+st.plotly_chart(fig_top_artists)
 
 # Top Songs Per Month
 st.subheader('Top Songs Per Month')
