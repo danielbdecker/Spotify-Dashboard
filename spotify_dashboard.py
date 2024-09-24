@@ -101,8 +101,10 @@ fig_top_songs_month = px.bar(top_songs_per_month,
                        color='trackName_short',
                        labels={'mins': 'Total Listening Time (minutes)', 'month_year': 'Month', 'trackName_short': 'Track'},
                        text='listening_time',
-                       hover_date={'trackName': True, 'trackName_short': False}
+                       hover_data={'trackName': True, 'trackName_short': False}
                        )
+
+fig_top_songs_month.update_layout(legend_title_text='Top Songs', showlegend=True)
 
 
 
