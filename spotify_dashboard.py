@@ -248,7 +248,10 @@ fig_monthly_listening = px.line(monthly_listening,
                                  labels={'hrs': 'Total Listening Time (hours)', 'month_year': 'Month'},
                                  markers=True)
 
-
+# Update layout to set the y-axis range starting at 0
+fig_monthly_listening.update_layout(
+    yaxis=dict(range=[0, monthly_listening['hrs'].max() * 1.1])  # Setting the minimum value to 0 and max slightly above the max value
+)
 
 ##########################
 ## DAILY LISTENING TIME ##
