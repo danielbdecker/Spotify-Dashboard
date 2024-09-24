@@ -272,6 +272,7 @@ weekly_listening = df_filtered.groupby(pd.Grouper(key='endTime', freq='W')).agg(
 
 # Convert the week to a more readable format (start date of the week)
 weekly_listening['week_start'] = weekly_listening['endTime'].dt.to_period('W').astype(str)
+weekly_listening['week_start'] = weekly_listening['week_start'][:10]
 
 # Calculate total listening time in hours
 weekly_listening['hrs'] = weekly_listening['msPlayed'].apply(convert_ms_to_hrs_num)
@@ -291,7 +292,6 @@ fig_weekly_listening = px.line(
 # Update layout to set the y-axis range starting at 0
 fig_weekly_listening.update_layout(
     yaxis=dict(range=[0, weekly_listening['hrs'].max() * 1.1]),  # Setting the minimum value to 0 and max slightly above the max value
-    title='Weekly Listening Time'
 )
 
 
