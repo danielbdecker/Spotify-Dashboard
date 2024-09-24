@@ -87,6 +87,10 @@ top_songs_per_month['listening_time'] = top_songs_per_month['msPlayed'].apply(co
 #adding minutes listened to for better visability
 top_songs_per_month['mins'] = top_songs_per_month['msPlayed'].apply(convert_ms_to_min_num)
 
+# Add a short track name column for long names
+top_songs_per_month['trackName_short'] = top_songs_per_month['trackName'].apply(lambda x: x if len(x) <= 30 else x[:27] + '...')
+
+
 #printing top songs per month results
 # print(f"\nTOP SONGS PER MONTH\n{top_songs_per_month}\n")
 
@@ -94,9 +98,11 @@ top_songs_per_month['mins'] = top_songs_per_month['msPlayed'].apply(convert_ms_t
 fig_top_songs_month = px.bar(top_songs_per_month,
                        x='month_year',
                        y='mins',
-                       color='trackName',
-                       labels={'mins': 'Total Listening Time (minutes)', 'month_year': 'Month'},
-                       text='listening_time')
+                       color='trackName_short',
+                       labels={'mins': 'Total Listening Time (minutes)', 'month_year': 'Month', 'trackName_short': 'Track'},
+                       text='listening_time',
+                       hover_date={'trackName': True, 'trackName_short': False}
+                       )
 
 
 
