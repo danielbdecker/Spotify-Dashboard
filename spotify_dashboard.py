@@ -95,7 +95,6 @@ fig_top_songs = px.bar(top_songs_per_month,
                        x='month_year',
                        y='mins',
                        color='trackName',
-                       title='Top Songs Per Month',
                        labels={'mins': 'Total Listening Time (minutes)', 'month_year': 'Month'},
                        text='listening_time')
 
@@ -114,19 +113,21 @@ top_artists_per_month = monthly_artists.sort_values(['month_year', 'msPlayed'], 
 #making listening time easier to understand by grouping into minutes, seconds
 top_artists_per_month['listening_time'] = top_artists_per_month['msPlayed'].apply(convert_ms_to_hr_min_sec)
 
+#adding minutes listened to for better visability
+top_artists_per_month['mins'] = top_artists_per_month['msPlayed'].apply(convert_ms_to_min_num)
+
 # print(f"TOP ARTISTS PER MONTH\n{top_artists_per_month}\n")
 
 # Bar chart for top artists per month
 fig_top_artists = px.bar(top_artists_per_month,
                           x='month_year',
-                          y='msPlayed',
+                          y='mins',
                           color='artistName',
-                          title='Top Artists Per Month',
-                          labels={'msPlayed': 'Total Listening Time (ms)', 'month_year': 'Month'},
+                          labels={'mins': 'Total Listening Time (minutes)', 'month_year': 'Month'},
                           text='listening_time')
 
 
-
+##!!
 ############################
 ## TOP SONGS IN PAST YEAR ##
 ############################
@@ -145,7 +146,7 @@ top_songs['listening_time'] = top_songs['msPlayed'].apply(convert_ms_to_hr_min_s
 
 
 
-
+##!!
 ##############################
 ## TOP ARTISTS IN PAST YEAR ##
 ##############################
@@ -176,14 +177,16 @@ monthly_listening = monthly_listening.sort_values(['month_year'], ascending=[Tru
 #making listening time easier to understand by grouping into minutes, seconds
 monthly_listening['listening_time'] = monthly_listening['msPlayed'].apply(convert_ms_to_hr_min_sec)
 
+#adding minutes listened to for better visability
+monthly_listening['hrs'] = monthly_listening['msPlayed'].apply(convert_ms_to_hrs_num)
+
 # print(f"MONTHLY LISTENING TIME\n{monthly_listening}\n")
 
 # Line chart for monthly listening time
 fig_monthly_listening = px.line(monthly_listening,
                                  x='month_year',
-                                 y='msPlayed',
-                                 title='Monthly Listening Time',
-                                 labels={'msPlayed': 'Total Listening Time (ms)', 'month_year': 'Month'},
+                                 y='hrs',
+                                 labels={'hrs': 'Total Listening Time (hours)', 'month_year': 'Month'},
                                  markers=True)
 
 
@@ -214,14 +217,16 @@ daily_listening = daily_listening.sort_values(['date'], ascending=[True])
 daily_listening['msPlayed'] = daily_listening['msPlayed'].astype(int)
 daily_listening['listening_time'] = daily_listening['msPlayed'].apply(convert_ms_to_hr_min_sec)
 
+#adding minutes listened to for better visability
+daily_listening['mins'] = daily_listening['msPlayed'].apply(convert_ms_to_min_num)
+
 # print(f"DAILY LISTENING TIME\n{daily_listening}\n")
 
 # Bar chart for daily listening time
 fig_daily_listening = px.bar(daily_listening,
                               x='date',
-                              y='msPlayed',
-                              title='Daily Listening Time',
-                              labels={'msPlayed': 'Total Listening Time (ms)', 'date': 'Date'},
+                              y='mins',
+                              labels={'mins': 'Total Listening Time (minutes)', 'date': 'Date'},
                               text='listening_time')
 
 
